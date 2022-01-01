@@ -11,9 +11,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Run
+        continue-on-error: true
         run: |
           gh api repos/$GITHUB_REPOSITORY/actions/runs \
-          --paginate -q '.workflow_runs[] | select(.head_branch != "main") | "\(.id)"' | \
+          --paginate -q '.workflow_runs[] | select(.head_branch != "master") | "\(.id)"' | \
           xargs -n1 -I % gh api repos/$GITHUB_REPOSITORY/actions/runs/% -X DELETE
         env:
           GITHUB_TOKEN: ${{ secrets.MY_TOKEN }}          
