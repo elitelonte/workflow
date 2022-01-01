@@ -15,3 +15,5 @@ jobs:
           gh api repos/$GITHUB_REPOSITORY/actions/runs \
           | jq -r '.workflow_runs[] | select(.head_branch != "master") | "\(.id)"' \
           | xargs -n1 -J % gh api repos/$GITHUB_REPOSITORY/actions/runs/% -X DELETE
+        env:
+          GITHUB_TOKEN: ${{ secrets.MY_TOKEN }}          
